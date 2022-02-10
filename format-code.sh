@@ -9,10 +9,12 @@ then
 fi
 cd ..
 
+all_java_files=$(find ./ -name "*.java")
+
 java \
 --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
 --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
 --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
 --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
 --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
--jar .cache/google-java-format-$lastVersion-all-deps.jar --replace *.java
+-jar .cache/google-java-format-$lastVersion-all-deps.jar --replace $all_java_files
