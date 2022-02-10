@@ -3,5 +3,6 @@
     description: Formats code in Google's Java codestyle.
     entry: ./format-code.sh
     language: script
-    
+    always_run: true
+
 
