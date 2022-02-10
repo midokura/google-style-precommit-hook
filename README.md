@@ -1,6 +1,8 @@
 A handy [pre-commit](http://pre-commit.com/) hook which will run Google's java
 code style formatter for you on your code!
 
+Grab the latest Google Autoformatter version here: [Google Autoformatter](https://github.com/google/google-java-format/releases)
+
 Usage:
 
 ```
