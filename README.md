@@ -5,10 +5,10 @@ Usage:
 
 ```
 repos:
-- repo: https://github.com/midokura/google-style-precommit-hook
-  sha: 6aa036498d466329ca6b05733957b06f95c9b2bc
+  - repo: https://github.com/midokura/google-style-precommit-hook
+    rev: v1.0.0
     hooks:
-      - id: google-style-java
+        - id: google-style-java
 ```
 
 *Note*: this file stores Google's code style formatter jar in a `.cache/`
