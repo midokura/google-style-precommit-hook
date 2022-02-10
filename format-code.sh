@@ -18,3 +18,5 @@ java \
 --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
 --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
 -jar .cache/google-java-format-$lastVersion-all-deps.jar --replace $all_java_files
+
+git add -u
