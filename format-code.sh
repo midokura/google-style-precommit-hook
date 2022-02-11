@@ -18,7 +18,7 @@ all_java_files=$(find ./ -name "*.java")
 if [ -z  "$formatter_version" ]; then 
     error_and_quit
 else
-    if [ -z "$2" ]; then
+    if [ -z "$all_java_files" ]; then
         echo "There are no files to format."
     else
         mkdir -p .cache
@@ -38,7 +38,7 @@ else
         --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
-        -jar .cache/google-java-format-$formatter_version-all-deps.jar --replace $2
+        -jar .cache/google-java-format-$formatter_version-all-deps.jar --replace $all_java_files
 
         git add -u
     fi
