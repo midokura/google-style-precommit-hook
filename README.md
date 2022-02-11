@@ -8,9 +8,10 @@ Usage:
 ```
 repos:
   - repo: https://github.com/midokura/google-style-precommit-hook
-    rev: v1.0.0
+    rev: v2.0.0
     hooks:
         - id: google-style-java
+        args: [-v 1.14.0]
 ```
 
 *Note*: this file stores Google's code style formatter jar in a `.cache/`

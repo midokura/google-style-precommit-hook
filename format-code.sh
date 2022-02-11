@@ -1,22 +1,51 @@
 #!/usr/bin/env sh
-mkdir -p .cache
-cd .cache
-lastVersion="1.14.0"
-if [ ! -f google-java-format-$lastVersion-all-deps.jar ]
-then
-    curl -LJO "https://github.com/google/google-java-format/releases/download/v$lastVersion/google-java-format-$lastVersion-all-deps.jar"
-    chmod 755 google-java-format-$lastVersion-all-deps.jar
-fi
-cd ..
+error_and_quit() {
+    echo "Midokura's Java Formatter Usage:";
+    echo "./format-code.sh -v latestVersion";
+    echo "latestVersion is the latest Google's Formatter version";
+    return 1;
+}
+
+download_formatter() {
+    cd .cache
+    if [ ! -f google-java-format-$1-all-deps.jar ]
+    then
+        curl -LJO "https://github.com/google/google-java-format/releases/download/v$1/google-java-format-$1-all-deps.jar"
+        chmod 755 google-java-format-$1-all-deps.jar
+    fi
+    cd ..
+}
+
+while getopts v: flag
+do 
+    case "${flag}" in
+        v) formatter_version=${OPTARG};;
+    esac
+done
 
 all_java_files=$(find ./ -name "*.java")
 
-java \
---add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
---add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
---add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
---add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
---add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
--jar .cache/google-java-format-$lastVersion-all-deps.jar --replace $all_java_files
+if [ -z  "$formatter_version" ]; then 
+    error_and_quit
+else
+    if [ -z "$all_java_files" ]; then
+        echo "There are no files to format."
+    else
+        mkdir -p .cache
+        echo "Using Google Formatter v$formatter_version"
 
-git add -u
+        download_formatter $formatter_version 
+
+        java \
+        --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
+        --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
+        --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
+        --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
+        --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
+        -jar .cache/google-java-format-$formatter_version-all-deps.jar --replace $all_java_files
+
+        git add -u
+    fi
+
+fi
+

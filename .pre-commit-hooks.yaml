@@ -4,5 +4,3 @@
     entry: ./format-code.sh
     language: script
     always_run: true
-
-
