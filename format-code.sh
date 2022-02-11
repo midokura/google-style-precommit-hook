@@ -6,16 +6,6 @@ error_and_quit() {
     return 1;
 }
 
-download_formatter() {
-    cd .cache
-    if [ ! -f google-java-format-$1-all-deps.jar ]
-    then
-        curl -LJO "https://github.com/google/google-java-format/releases/download/v$1/google-java-format-$1-all-deps.jar"
-        chmod 755 google-java-format-$1-all-deps.jar
-    fi
-    cd ..
-}
-
 while getopts v: flag
 do 
     case "${flag}" in
@@ -34,7 +24,13 @@ else
         mkdir -p .cache
         echo "Using Google Formatter v$formatter_version"
 
-        download_formatter $formatter_version 
+        cd .cache
+        if [ ! -f google-java-format-$formatter_version-all-deps.jar ]
+        then
+            curl -LJO "https://github.com/google/google-java-format/releases/download/v$formatter_version/google-java-format-$formatter_version-all-deps.jar"
+            chmod 755 google-java-format-$formatter_version-all-deps.jar
+        fi
+        cd ..
 
         java \
         --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
