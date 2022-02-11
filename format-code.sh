@@ -9,7 +9,7 @@ error_and_quit() {
 while getopts v: flag
 do 
     case "${flag}" in
-        v) formatter_version=${OPTARG};;
+        v) formatter_version=${OPTARG##*( )};;
     esac
 done
 
@@ -22,7 +22,6 @@ else
         echo "There are no files to format."
     else
         mkdir -p .cache
-        formatter_version = ${formatter_version##*( )}
         echo "Using Google Formatter v$formatter_version"
 
         cd .cache
