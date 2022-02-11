@@ -6,6 +6,10 @@ error_and_quit() {
     return 1;
 }
 
+echo "$1"
+echo "$2"
+echo "$3"
+echo "$4"
 while getopts v: flag
 do 
     case "${flag}" in
