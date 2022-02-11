@@ -22,6 +22,7 @@ else
         echo "There are no files to format."
     else
         mkdir -p .cache
+        formatter_version = ${formatter_version##*( )}
         echo "Using Google Formatter v$formatter_version"
 
         cd .cache
