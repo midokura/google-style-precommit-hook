@@ -6,10 +6,6 @@ error_and_quit() {
     return 1;
 }
 
-echo "$1"
-echo "$2"
-echo "$3"
-echo "$4"
 while getopts v: flag
 do 
     case "${flag}" in
@@ -22,7 +18,7 @@ all_java_files=$(find ./ -name "*.java")
 if [ -z  "$formatter_version" ]; then 
     error_and_quit
 else
-    if [ -z "$all_java_files" ]; then
+    if [ -z "$2" ]; then
         echo "There are no files to format."
     else
         mkdir -p .cache
@@ -42,7 +38,7 @@ else
         --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
-        -jar .cache/google-java-format-$formatter_version-all-deps.jar --replace $all_java_files
+        -jar .cache/google-java-format-$formatter_version-all-deps.jar --replace $2
 
         git add -u
     fi
