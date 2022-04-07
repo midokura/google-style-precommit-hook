@@ -11,7 +11,7 @@ repos:
     rev: v2.0.0
     hooks:
         - id: google-style-java
-        args: [-v 1.14.0]
+        args: [-v 1.15.0]
 ```
 
 *Note*: this file stores Google's code style formatter jar in a `.cache/`

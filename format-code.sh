@@ -13,7 +13,7 @@ do
     esac
 done
 
-all_java_files=$(find ./ -name "*.java")
+all_java_files=$(git diff --cached --name-only --diff-filter=ACMR | grep ".*java$" )
 
 if [ -z  "$formatter_version" ]; then 
     error_and_quit
@@ -22,13 +22,13 @@ else
         echo "There are no files to format."
     else
         mkdir -p .cache
-        echo "Using Google Formatter v$formatter_version"
+        echo "Using Google Formatter v${formatter_version}"
 
         cd .cache
-        if [ ! -f google-java-format-$formatter_version-all-deps.jar ]
+        if [ ! -f google-java-format-${formatter_version}-all-deps.jar ]
         then
-            curl -LJO "https://github.com/google/google-java-format/releases/download/v$formatter_version/google-java-format-$formatter_version-all-deps.jar"
-            chmod 755 google-java-format-$formatter_version-all-deps.jar
+            curl -LJO "https://github.com/google/google-java-format/releases/download/v${formatter_version}/google-java-format-${formatter_version}-all-deps.jar"
+            chmod 755 google-java-format-${formatter_version}-all-deps.jar
         fi
         cd ..
 
@@ -38,9 +38,8 @@ else
         --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
         --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
-        -jar .cache/google-java-format-$formatter_version-all-deps.jar --replace $all_java_files
+        -jar .cache/google-java-format-${formatter_version}-all-deps.jar --replace ${all_java_files}
 
-        git add -u
     fi
 
 fi
